@@ -1,7 +1,8 @@
-
 import './App.css'
 import {puppyList} from './data.js'
-import {useState} from 'react'
+import React, {useState} from 'react'
+
+
 function App() {
   console.log(puppyList);
   // Remember that useState returns an array. And, the array contains two elements. 
@@ -9,15 +10,28 @@ function App() {
   // which you can use to reset the value. You can 
   // deconstruct both of those values from the array, ending up with this:
   const [puppies, setPuppies] = useState(puppyList);
-  console.log(puppies);
-
-  
+  const [featPupId, setfeatPupId] = useState(null);
+  // console.log(puppies);
+  const featuredPup = puppies.find((pup) => pup.id === featPupId)
+  console.log(featuredPup); 
 
   return (
     <>
       {puppies.map((puppy) => {
-        return <p key={puppy.id}>{puppy.name}</p>
+        return <p onClick={() => { setfeatPupId(puppy.id)}} key={puppy.id}>{puppy.name}</p>
       })}
+      
+      <p> {featPupId && (
+        <div>
+          <h2>{featuredPup.name}</h2>
+          <ul>
+            <li>Age: {featuredPup.age}</li>
+            <li>Email: {featuredPup.email}</li>
+          </ul>
+        </div>
+      )} </p>  
+
+
     </>
   );
 }
